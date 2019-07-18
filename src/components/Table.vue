@@ -4,20 +4,25 @@
     <div v-if="filteredUsers">
       <div class="search-box">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <h1>Users</h1>
           </div>
-          <div class="col-md-6">
-            <div class="form-group has-search">
-              <span class="form-control-feedback">
-                <font-awesome-icon icon="search" />
-              </span>
-              <input
-                v-model="search"
-                type="text"
-                class="form-control"
-                placeholder="Filter table content"
-              />
+          <div class="row col-md-8">
+            <div class="col-md-10">
+              <div class="form-group has-search">
+                <span class="form-control-feedback">
+                  <font-awesome-icon icon="search" />
+                </span>
+                <input
+                  v-model="search"
+                  type="text"
+                  class="form-control"
+                  placeholder="Filter table content"
+                />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <router-link class="btn btn-primary" to="/users/new">Register</router-link>
             </div>
           </div>
         </div>
@@ -45,8 +50,8 @@
               <a :href="'mailto:' + user.email">{{ user.email }}</a>
             </td>
             <td>{{ user.address.city }}</td>
-            <td>{{ makeRandomRideInGroupText() }}</td>
-            <td>{{ makeRandomDayOfWeekText() }}</td>
+            <td>{{ makeRandomRideInGroupText(user) }}</td>
+            <td>{{ makeRandomDaysOfWeekText(user) }}</td>
             <td>
               <a href="javascript:void(0);">{{ getPostsFromUser(user.id) }}</a>
             </td>
@@ -78,6 +83,7 @@
 
 <script>
 import axios from "axios";
+import _ from "lodash";
 
 export default {
   name: "Table",
@@ -85,63 +91,81 @@ export default {
     return {
       loading: false,
       search: "",
-      users: null,
       posts: null,
       albums: null,
       photos: null
     };
   },
-  created() {
-    this.fetchData();
+  mounted() {
+    if (this.shared.isLoaded === false) {
+      this.fetchUsers();
+    }
+    this.fetchPosts();
+    this.fetchAlbums();
+    this.fetchPhotos();
   },
-  watch: {
-    $route: "fetchData"
-  },
+  props: ["shared"],
   methods: {
-    fetchData() {
-      this.loading = true;
-      axios.get("https://jsonplaceholder.typicode.com/users").then(response => {
-        this.loading = false;
-        this.users = response.data;
-      });
+    fetchPosts() {
       axios.get("https://jsonplaceholder.typicode.com/posts").then(response => {
-        this.loading = false;
         this.posts = response.data;
       });
+    },
+    fetchAlbums() {
       axios
         .get("https://jsonplaceholder.typicode.com/albums")
         .then(response => {
-          this.loading = false;
           this.albums = response.data;
         });
+    },
+    fetchPhotos() {
       axios
         .get("https://jsonplaceholder.typicode.com/photos")
         .then(response => {
-          this.loading = false;
           this.photos = response.data;
         });
     },
+    fetchUsers() {
+      this.loading = true;
+      axios.get("https://jsonplaceholder.typicode.com/users").then(response => {
+        this.loading = false;
+        this.shared.isLoaded = true;
+        if (this.shared.users.length > 0) {
+          this.shared.users = _.merge(this.shared.users, response.data);
+        } else {
+          this.shared.users = response.data;
+        }
+      });
+    },
     deleteRow: function(dialog, user) {
-      let idx = this.users.findIndex(c => c.id == user.id);
-      this.users.splice(idx, 1);
+      let idx = this.shared.users.findIndex(c => c.id == user.id);
+      this.shared.users.splice(idx, 1);
       dialog.close();
     },
-    makeRandomRideInGroupText() {
-      // Mock
-      let options = ["Always", "Sometimes", "Never"];
-      return options[Math.floor(Math.random() * options.length)];
+    makeRandomRideInGroupText(user) {
+      if (user.rideInGroup !== undefined) {
+        return user.rideInGroup;
+      } else {
+        // Mock
+        let options = ["Always", "Sometimes", "Never"];
+        return options[Math.floor(Math.random() * options.length)];
+      }
     },
-    makeRandomDayOfWeekText() {
-      // Mock
-      let options = [
-        "Week days",
-        "Every day",
-        "Weekends",
-        "Mon, Wed, Fri",
-        "Mon, Tue, Wed",
-        "Fri, Sun"
-      ];
-      return options[Math.floor(Math.random() * options.length)];
+    makeRandomDaysOfWeekText(user) {
+      if (user.daysOfWeek !== undefined) {
+        return user.daysOfWeek;
+      } else {
+        // Mock
+        let options = [
+          "Week days",
+          "Every day",
+          "Weekends",
+          "Mon, Wed, Fri",
+          "Mon, Tue, Wed",
+          "Fri, Sun"
+        ];
+        return options[Math.floor(Math.random() * options.length)];
+      }
     },
     getPostsFromUser(userId) {
       if (this.posts !== null) {
@@ -154,25 +178,27 @@ export default {
       if (this.albums !== null) {
         let albums = this.albums.filter(a => a.userId === userId);
         return albums.length;
-      } 
+      }
       return 0;
     },
     getPhotosFromUser(userId) {
       if (this.albums !== null) {
-        let albums = this.albums.filter(a => a.userId === userId).map(a => a.id);
+        let albums = this.albums
+          .filter(a => a.userId === userId)
+          .map(a => a.id);
         if (this.photos !== null) {
           let photos = this.photos.filter(c => albums.includes(c.albumId));
           return photos.length;
         }
         return 0;
-      } 
+      }
       return 0;
     }
   },
   computed: {
     filteredUsers() {
-      if (this.users !== null) {
-        return this.users.filter(user => {
+      if (this.shared.users !== null) {
+        return this.shared.users.filter(user => {
           return (
             user.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
             user.username.toLowerCase().indexOf(this.search.toLowerCase()) > -1

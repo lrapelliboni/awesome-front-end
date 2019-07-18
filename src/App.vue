@@ -8,24 +8,21 @@
         <span>Venturus Sports</span>
       </div>
     </header>
-    <!-- <ul>
-      <li>
-        <router-link to="/">/home</router-link>
-      </li>
-      <li>
-        <router-link to="/users">/users</router-link>
-      </li>
-      <li>
-        <router-link to="/users/new">/users/new</router-link>
-      </li>
-    </ul>-->
-    <router-view></router-view>
+    <router-view :shared="shared"></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: "app"
+  name: "app",
+  data: function() {
+    return {
+      shared: {
+        users: [],
+        isLoaded: false
+      }
+    };
+  }
 };
 </script>
 

@@ -34,9 +34,13 @@ const router = new VueRouter({
   mode: 'history',
   base: __dirname,
   routes: [
-    { path: '/', component: Home },
-    { path: '/users', component: Table },
-    { path:  '/users/new', component: Form },
+    {
+      path: '/', component: Home, redirect: {
+        name: 'users'
+      }
+    },
+    { name: 'users', path: '/users', component: Table },
+    { path: '/users/new', component: Form },
     { path: '*', component: NotFound }
   ]
 })
