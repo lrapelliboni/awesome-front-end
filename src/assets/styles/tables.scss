@@ -1,0 +1,37 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.8em;
+  overflow-y: auto;
+  height: 100px;
+}
+table thead th {
+  background: #fff;
+  position: sticky;
+  top: 0;
+}
+table tbody tr:hover td.trash svg {
+  visibility: visible;
+}
+table tbody tr td.trash svg {
+  visibility: hidden;
+}
+table tbody tr td.trash svg:hover {
+  cursor: pointer;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
