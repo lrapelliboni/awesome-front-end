@@ -1,0 +1,45 @@
+@import "../assets/styles/variables";
+
+.breadcrumb-container {
+  background: $light-grey;
+  display: flex;
+  clear: both;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+  }
+  ul > li {
+    display: flex;
+    float: left;
+    height: 30px;
+    width: auto;
+    color: $black;
+    font-weight: bold;
+    font-size: .8em;
+    cursor: default;
+    align-items: center;
+  }
+  ul > li:not(:last-child)::after {
+    content: '>';
+    float: right;
+    font-size: .8em;
+    margin: 0 .5em;
+    color: $black;
+    cursor: default;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .linked a {
+    color: $black;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: normal;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

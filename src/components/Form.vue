@@ -1,6 +1,31 @@
 <template>
   <div class="form-component">
-    <h1>Registration</h1>
+    <h2 class="title">Registration</h2>
+
+    <div class="row">
+      <div class="col-md-4 box-info">
+        <h1>Need help?</h1>
+        <div class="box-text">
+          <font-awesome-icon icon="life-ring" />
+          <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam rem modi soluta error, placeat laboriosam suscipit.</span>
+        </div>
+      </div>
+      <div class="col-md-4 box-info">
+        <h1>Why register?</h1>
+        <div class="box-text">
+          <font-awesome-icon icon="heartbeat" />
+          <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam rem modi soluta error, placeat laboriosam suscipit.</span>
+        </div>
+      </div>
+      <div class="col-md-4 box-info">
+        <h1>What people are saying...</h1>
+        <div class="box-text">
+          <font-awesome-icon icon="smile" />
+          <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam rem modi soluta error, placeat laboriosam suscipit.</span>
+        </div>
+      </div>
+    </div>
+
     <form class="needs-validation" id="registration-form">
       <div class="row">
         <div class="col-md-6">
@@ -195,7 +220,7 @@ export default {
       email: null,
       city: null,
       daysOfWeek: [],
-      rideInGroup: 'Always',
+      rideInGroup: "Always",
       validationErrors: {
         username: null,
         name: null,
@@ -203,6 +228,12 @@ export default {
         daysOfWeek: null
       }
     };
+  },
+  mounted() {
+    var headers = document.querySelectorAll("h1,h2,h3,h4,h5,h6");
+    for (var i = 0; i < headers.length; i++) {
+      headers[i].setAttribute("data-content", headers[i].innerHTML);
+    }
   },
   methods: {
     submitForm() {
@@ -253,4 +284,8 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+@import "../assets/styles/form";
+</style>
 

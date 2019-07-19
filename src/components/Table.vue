@@ -4,79 +4,82 @@
     <div v-if="filteredUsers">
       <div class="search-box">
         <div class="row">
-          <div class="col-md-4">
-            <h1>Users</h1>
+          <div class="col-md-8">
+            <h2 class="title">Users</h2>
           </div>
-          <div class="row col-md-8">
-            <div class="col-md-10">
-              <div class="form-group has-search">
-                <span class="form-control-feedback">
-                  <font-awesome-icon icon="search" />
-                </span>
-                <input
-                  v-model="search"
-                  type="text"
-                  class="form-control"
-                  placeholder="Filter table content"
-                />
-              </div>
-            </div>
-            <div class="col-md-2">
-              <router-link class="btn btn-primary" to="/users/new">Register</router-link>
+
+          <div class="col-md-4">
+            <div class="form-group has-search">
+              <span class="form-control-feedback">
+                <font-awesome-icon icon="search" />
+              </span>
+              <input
+                v-model="search"
+                type="text"
+                class="form-control"
+                placeholder="Filter table content"
+              />
             </div>
           </div>
         </div>
       </div>
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Name</th>
-            <th>E-mail</th>
-            <th>City</th>
-            <th>Ride in group</th>
-            <th>Day of the week</th>
-            <th>Posts</th>
-            <th>Albums</th>
-            <th>Photos</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody v-if="filteredUsers.length">
-          <tr v-for="user in filteredUsers" :key="user.id">
-            <td>{{ user.username }}</td>
-            <td>{{ user.name }}</td>
-            <td>
-              <a :href="'mailto:' + user.email">{{ user.email }}</a>
-            </td>
-            <td>{{ user.address.city }}</td>
-            <td>{{ makeRandomRideInGroupText(user) }}</td>
-            <td>{{ makeRandomDaysOfWeekText(user) }}</td>
-            <td>
-              <a href="javascript:void(0);">{{ getPostsFromUser(user.id) }}</a>
-            </td>
-            <td>
-              <a href="javascript:void(0);">{{ getAlbumsFromUser(user.id) }}</a>
-            </td>
-            <td>{{ getPhotosFromUser(user.id) }}</td>
-            <td class="trash">
-              <a
-                v-confirm="{
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-12">
+          <router-link class="btn btn-primary float-right" to="/users/new">Register</router-link>
+        </div>
+      </div>
+      <div class="table-container">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Name</th>
+              <th>E-mail</th>
+              <th>City</th>
+              <th>Ride in group</th>
+              <th>Day of the week</th>
+              <th>Posts</th>
+              <th>Albums</th>
+              <th>Photos</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody v-if="filteredUsers.length">
+            <tr v-for="user in filteredUsers" :key="user.id">
+              <td>{{ user.username }}</td>
+              <td>{{ user.name }}</td>
+              <td>
+                <a :href="'mailto:' + user.email">{{ user.email }}</a>
+              </td>
+              <td>{{ user.address.city }}</td>
+              <td>{{ makeRandomRideInGroupText(user) }}</td>
+              <td>{{ makeRandomDaysOfWeekText(user) }}</td>
+              <td>
+                <a href="javascript:void(0);">{{ getPostsFromUser(user.id) }}</a>
+              </td>
+              <td>
+                <a href="javascript:void(0);">{{ getAlbumsFromUser(user.id) }}</a>
+              </td>
+              <td>{{ getPhotosFromUser(user.id) }}</td>
+              <td class="trash">
+                <a
+                  v-confirm="{
                 ok: dialog => deleteRow(dialog, user),
                 message: 'Are you sure want to remove this item?'
               }"
-              >
-                <font-awesome-icon icon="trash" />
-              </a>
-            </td>
-          </tr>
-        </tbody>
-        <tbody v-else>
-          <tr>
-            <td colspan="10">No records found</td>
-          </tr>
-        </tbody>
-      </table>
+                >
+                  <font-awesome-icon icon="trash" />
+                </a>
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td colspan="10">No records found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -97,6 +100,11 @@ export default {
     };
   },
   mounted() {
+    var headers = document.querySelectorAll("h1,h2,h3,h4,h5,h6");
+    for (var i = 0; i < headers.length; i++) {
+      headers[i].setAttribute("data-content", headers[i].innerHTML);
+    }
+
     if (this.shared.isLoaded === false) {
       this.fetchUsers();
     }

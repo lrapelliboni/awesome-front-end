@@ -1,7 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
 
+header {
+  margin-top:10px;
+}
+
 .header-container {
-  margin-top: 10px;
   .logo-container {
     background: $primary;
     width: 60px;
@@ -38,3 +41,60 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+h2.title {
+  position:relative;
+}
+h2.title:before{
+  position: absolute;
+  display:block;
+  top:0;
+  left:0;
+  bottom:0;
+  content: attr(data-content);
+  background-color:#FFF;
+  color:#FFF;
+  z-index:-1;
+  padding-right: 2em;
+}
+h2.title:after {
+  position:absolute;
+  content:'';
+  display: block;
+  left:0;
+  right:0;
+  top:50%;
+  background-color: $light-grey;
+  height:.1em;
+  min-height:1px;
+  z-index:-2;
+}
+
+//brand
+.brand-container {
+  background: #BEEAE0;
+  padding: 30px;
+  margin-bottom: 30px;
+  float: left;
+  width: 100%;
+  .box-info {
+    float: left;
+    svg {
+      font-size: 3.2em;
+      color: $primary;
+      float: left;
+      margin-right: 10px;
+    }
+    .box-text {
+      float: left;
+      margin-top: 5px;
+      small {
+        display: block;
+        width: 100px;
+      }
+      strong {
+        font-size: 21px;
+      }
+    }
+  }
+}

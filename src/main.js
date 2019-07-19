@@ -7,10 +7,20 @@ import 'vuejs-dialog/dist/vuejs-dialog.min.css';
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTrash, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { 
+  faTrash, 
+  faSearch, 
+  faSmile, 
+  faHeartbeat, 
+  faLifeRing, 
+  faPuzzlePiece, 
+  faTrophy, 
+  faMapSigns,
+  faAngleRight
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faTrash, faSearch)
+library.add(faTrash, faSearch, faSmile, faHeartbeat, faLifeRing, faPuzzlePiece, faTrophy, faMapSigns, faAngleRight)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 import App from './App.vue'
@@ -35,12 +45,40 @@ const router = new VueRouter({
   base: __dirname,
   routes: [
     {
-      path: '/', component: Home, redirect: {
-        name: 'users'
+      name: 'Home',
+      path: '/',
+      component: Home,
+      redirect: {
+        name: 'Users'
+      },
+      meta: {
+        breadcrumb: [
+          { name: 'Home', link: '/' }
+        ]
       }
     },
-    { name: 'users', path: '/users', component: Table },
-    { path: '/users/new', component: Form },
+    {
+      name: 'Users',
+      path: '/users',
+      component: Table,
+      meta: {
+        breadcrumb: [
+          { name: 'Home', link: '/' },
+          { name: 'Users' }
+        ]
+      }
+    },
+    {
+      name: 'Register',
+      path: '/users/new', component: Form,
+      meta: {
+        breadcrumb: [
+          { name: 'Home', link: '/' },
+          { name: 'Users', link: '/users' },
+          { name: 'Register' }
+        ]
+      }
+    },
     { path: '*', component: NotFound }
   ]
 })

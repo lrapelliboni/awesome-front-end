@@ -9,11 +9,10 @@ export default {
   name: 'home',
   data () {
     return {
-      msg: 'Teste Venturus'
+      msg: 'Awesome Front-End'
     }
   }
 }
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
