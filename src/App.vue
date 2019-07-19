@@ -11,9 +11,7 @@
       </div>
       <Dropdown />
     </header>
-
     <Breadcrumb />
-
     <div class="brand-container">
       <div class="brand container">
         <div class="col-md-4 box-info">
@@ -39,7 +37,6 @@
         </div>
       </div>
     </div>
-
     <div class="container" style="clear:both;">
       <router-view :shared="shared"></router-view>
     </div>

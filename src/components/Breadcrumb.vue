@@ -4,7 +4,8 @@
       <li
         v-for="(breadcrumb, idx) in breadcrumbList"
         :key="idx"
-        :class="{'linked': !!breadcrumb.link}">
+        :class="{'linked': !!breadcrumb.link}"
+      >
         <a href="javascript:void(0);" @click="routeTo(idx)">{{ breadcrumb.name }}</a>
       </li>
     </ul>
@@ -13,23 +14,30 @@
 
 <script>
 export default {
-  name: 'Breadcrumb',
-  data () {
+  name: "Breadcrumb",
+  data() {
     return {
       breadcrumbList: []
-    }
+    };
   },
-  mounted () { 
+  mounted() {
     this.updateList();
   },
-  watch: { '$route' () { this.updateList() } },
+  watch: {
+    $route() {
+      this.updateList();
+    }
+  },
   methods: {
-    routeTo (pRouteTo) {
-      if (this.breadcrumbList[pRouteTo].link) this.$router.push(this.breadcrumbList[pRouteTo].link)
+    routeTo(idx) {
+      if (this.breadcrumbList[idx].link)
+        this.$router.push(this.breadcrumbList[idx].link);
     },
-    updateList () { this.breadcrumbList = this.$route.meta.breadcrumb }
+    updateList() {
+      this.breadcrumbList = this.$route.meta.breadcrumb;
+    }
   }
-}
+};
 </script>
 <style lang="scss">
 @import "../assets/styles/breadcrumb";

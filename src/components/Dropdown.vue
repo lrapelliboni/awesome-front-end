@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown">
-    <span v-on:click="toggle('ranking')" v-bind:class="{'open' : dropDowns.ranking.open}">
+    <span v-on:click="toggle('profileMenu')" v-bind:class="{'open' : dropDowns.profileMenu.open}">
       <span>Jason Bourne</span>
       <div class="dropdown-content">
         <ul>
@@ -27,26 +27,25 @@
 <script>
 export default {
   name: "dropdown",
-  ready: function() {
-    var self = this;
-    window.addEventListener(
-      "click",
-      function(e) {
-        if (!e.target.parentNode.classList.contains("menu__link--toggle")) {
-          self.close();
-        }
-      },
-      false
-    );
-  },
   data: function() {
     return {
       dropDowns: {
-        ranking: { open: false }
+        profileMenu: { open: false }
       }
     };
   },
+  mounted() {
+    document.addEventListener("click", this.onClick);
+  },
+  beforeDestroy() {
+    document.removeEventListener("click", this.onClick);
+  },
   methods: {
+    onClick(e) {
+      if (!e.target.parentNode.classList.contains("open")) {
+        this.dropDowns.profileMenu.open = false;
+      }
+    },
     toggle: function(dropdownName) {
       this.dropDowns[dropdownName].open = !this.dropDowns[dropdownName].open;
     }

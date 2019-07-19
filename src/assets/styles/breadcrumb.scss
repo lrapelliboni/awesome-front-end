@@ -1,10 +1,8 @@
 @import "../assets/styles/variables";
-
 .breadcrumb-container {
   background: $light-grey;
   display: flex;
   clear: both;
-
   ul {
     list-style-type: none;
     margin: 0;

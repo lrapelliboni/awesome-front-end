@@ -7,7 +7,6 @@
           <div class="col-md-8">
             <h2 class="title">Users</h2>
           </div>
-
           <div class="col-md-4">
             <div class="form-group has-search">
               <span class="form-control-feedback">

@@ -25,7 +25,6 @@
         </div>
       </div>
     </div>
-
     <form class="needs-validation" id="registration-form">
       <div class="row">
         <div class="col-md-6">
@@ -64,7 +63,6 @@
             <span class="text-danger" v-if="validationErrors.email" v-text="validationErrors.email"></span>
           </div>
         </div>
-
         <div class="col-md-6">
           <div class="form-group">
             <label for="lastName" style="width: 100%;">
@@ -73,7 +71,6 @@
             </label>
             <input type="text" class="form-control" v-model="city" name="city" id="city" />
           </div>
-
           <div class="form-group">
             <label for="ride-in-group-always" style="display: block;">Ride in group</label>
             <div class="custom-control custom-radio custom-control-inline">
@@ -199,7 +196,6 @@
           </div>
         </div>
       </div>
-
       <button class="btn btn-primary" type="submit" @click.prevent="submitForm()">Save</button>
       &nbsp;
       <router-link class="btn btn-light" to="/users">Discard</router-link>
@@ -250,7 +246,6 @@ export default {
           rideInGroup: this.rideInGroup
         };
         this.shared.users.push(newUser);
-
         // Redirect to /users path
         this.$router.push("/users");
       }
