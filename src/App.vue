@@ -6,7 +6,7 @@
           <div class="logo"></div>
         </div>
         <div class="header-text">
-          <span>Venturus Sports</span>
+          <span>Sports</span>
         </div>
       </div>
       <Dropdown />
